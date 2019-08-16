@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-class Transaction extends Component {
+export class Transaction extends Component {
   render () {
     return (
       <div>
@@ -12,8 +12,6 @@ class Transaction extends Component {
     )
   }
 }
-
-export default Transaction
 
 Transaction.propTypes = {
   description: PropTypes.string,
