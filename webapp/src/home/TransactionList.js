@@ -10,6 +10,8 @@ const TRANSACTION_QUERY = gql`
       merchant
       description
       amount
+      credit
+      debit
     }
   }
 `
@@ -21,7 +23,7 @@ export class TransactionList extends Component {
         {({ loading, error, data }) => {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
-          const TransactionsToRender = data.transactions
+          const TransactionsToRender = data.transaction
           return (
             <div>
               {TransactionsToRender.map(transaction => <Transaction key={transaction.id} transaction={transaction} />)}

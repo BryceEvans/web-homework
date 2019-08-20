@@ -4,25 +4,29 @@ import gql from 'graphql-tag'
 import { css } from '@emotion/core'
 
 const POST_MUTATION = gql`
-  mutation PostMutation($description: String!, $merchant: String!, $amount: Float!) {
-    post(description: $description, merchant: $merchant, amount: $amount) {
+  mutation PostMutation ($merchant_id: String!, $description: String!, $amount: Float!, $credit: Boolean!, $debit: Boolean!) {
+    addTransaction(description: $description, merchant: $merchant_id, amount: $amount, credit: $credit, debit: $debit) {
       id
+      merchant_id
       description
-      merchant
       amount
-    }
+      credit
+      debit
   }
+}
 `
 
 export class CreateTransaction extends Component {
   state = {
-    merchant: '',
+    merchant_id: '',
     description: '',
-    amount: ''
+    amount: '',
+    credit: true,
+    debit: false
   }
 
   render () {
-    const { merchant, description, amount } = this.state
+    const { merchant, description, amount, credit, debit } = this.state
     return (
       <div>
         <div css={inputStyle}>
@@ -30,7 +34,7 @@ export class CreateTransaction extends Component {
           <input onChange={e => this.setState({ description: e.target.value })} placeholder='Enter Description' type='text' value={description} />
           <input onChange={e => this.setState({ amount: e.target.value })} placeholder='Enter Amount' type='text' value={amount} />
         </div>
-        <Mutation mutation={POST_MUTATION} variables={{ merchant, description, amount }}>
+        <Mutation mutation={POST_MUTATION} variables={{ merchant, description, amount, credit, debit }}>
           {postMutation => <button css={buttonStyle} onClick={postMutation}>Submit</button>}
         </Mutation>
       </div>
