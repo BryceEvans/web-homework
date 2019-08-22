@@ -3,39 +3,39 @@ import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { css } from '@emotion/core'
 
-const POST_MUTATION = gql`
-  mutation PostMutation ($merchant_id: String!, $description: String!, $amount: Float!, $credit: Boolean!, $debit: Boolean!) {
-    addTransaction(description: $description, merchant: $merchant_id, amount: $amount, credit: $credit, debit: $debit) {
-      id
-      merchant_id
-      description
+const ADD_TRANSACTION = gql`
+  mutation AddTransaction ($amount: Float!) {
+    addTransaction(amount: $amount) {
+      # id
+      # merchant_id
+      # description
       amount
-      credit
-      debit
+      # credit
+      # debit
   }
 }
 `
 
 export class CreateTransaction extends Component {
   state = {
-    merchant_id: '',
-    description: '',
-    amount: '',
-    credit: true,
-    debit: false
+    // merchant_id: '',
+    // description: '',
+    amount: ''
+    // credit: true,
+    // debit: false
   }
 
   render () {
-    const { merchant, description, amount, credit, debit } = this.state
+    const { amount } = this.state
     return (
       <div>
         <div css={inputStyle}>
-          <input onChange={e => this.setState({ merchant: e.target.value })} placeholder='Enter Merchant' type='text' value={merchant} />
-          <input onChange={e => this.setState({ description: e.target.value })} placeholder='Enter Description' type='text' value={description} />
+          {/* <input onChange={e => this.setState({ merchant: e.target.value })} placeholder='Enter Merchant' type='text' value={merchant} />
+          <input onChange={e => this.setState({ description: e.target.value })} placeholder='Enter Description' type='text' value={description} /> */}
           <input onChange={e => this.setState({ amount: e.target.value })} placeholder='Enter Amount' type='text' value={amount} />
         </div>
-        <Mutation mutation={POST_MUTATION} variables={{ merchant, description, amount, credit, debit }}>
-          {postMutation => <button css={buttonStyle} onClick={postMutation}>Submit</button>}
+        <Mutation mutation={ADD_TRANSACTION} variables={{ amount }}>
+          {AddTransaction => <button css={buttonStyle} onClick={AddTransaction}>Submit</button>}
         </Mutation>
       </div>
     )

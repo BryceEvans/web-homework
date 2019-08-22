@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
-import Transaction from './Transaction'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import { Transaction } from './index'
 
 const TRANSACTION_QUERY = gql`
   {
-    transaction {
+    transactions {
       id
-      merchant
-      description
+      # merchant
+      # description
       amount
-      credit
-      debit
+      # credit
+      # debit
     }
   }
 `
@@ -23,12 +23,23 @@ export class TransactionList extends Component {
         {({ loading, error, data }) => {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
-          const TransactionsToRender = data.transaction
-          return (
-            <div>
-              {TransactionsToRender.map(transaction => <Transaction key={transaction.id} transaction={transaction} />)}
-            </div>
-          )
+          const TransactionsToRender = data.transactions
+          console.log('TTR', data)
+          if (TransactionsToRender === null) {
+            return (
+              <div>
+                <h1>
+                  This isnt working yet
+                </h1>
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                {TransactionsToRender.map(transaction => <Transaction key={transaction.id} transaction={transaction} />)}
+              </div>
+            )
+          }
         }}
       </Query>
     )

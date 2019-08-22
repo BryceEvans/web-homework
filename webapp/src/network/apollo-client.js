@@ -62,7 +62,7 @@ export const client = new ApolloClient({
     }),
     new HttpLink({
       uri: SERVER_URL,
-      credentials: 'include'
+      credentials: 'same-origin'
     })
   ]),
   cache
